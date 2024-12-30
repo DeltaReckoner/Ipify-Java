@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.ExecutionException;
-
 import static ipify.models.IPFormat.IPFormatType.Text;
 
 public class IpifyTest {
@@ -17,11 +15,15 @@ public class IpifyTest {
     }
 
     @Test
-    void testGetIpAddress() throws ExecutionException, InterruptedException {
-        IPFormat ipFormat = new IPFormat.IPFormatBuilder(Text).build();
-        String ipAddress = ipifyClient.getIPAddress(ipFormat);
+    void testGetIpAddress() {
+        try {
+            IPFormat ipFormat = new IPFormat.IPFormatBuilder(Text).build();
+            String ipAddress = ipifyClient.getIPAddress(ipFormat);
 
-        Assertions.assertNotNull(ipAddress);
-        Assertions.assertFalse(ipAddress.isEmpty());
+            Assertions.assertNotNull(ipAddress);
+            Assertions.assertFalse(ipAddress.isEmpty());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage());
+        }
     }
 }
